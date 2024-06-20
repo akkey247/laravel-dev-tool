@@ -1,0 +1,14 @@
+{
+  "name": "root/laravel11-dev-tool",
+  "authors": [
+      {
+          "name": "akkey247"
+      }
+  ],
+  "autoload": {
+      "psr-4": {
+          "Akkey247\\Laravel11DevTool\\": "src/"
+      }
+  },
+  "require": {}
+}
