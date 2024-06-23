@@ -1,0 +1,20 @@
+<?php
+
+use App\Http\Controllers{{BackSlashDirName}}\{{ModelName}}Controller;
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('{{dir_name_slash}}{{model_name}}')->group(function () {
+    Route::get('list', [{{ModelName}}Controller::class, 'list'])->name('{{dir_name_dot}}{{model_name}}.list');
+
+    Route::get('detail/{id}', [{{ModelName}}Controller::class, 'detail'])->name('{{dir_name_dot}}{{model_name}}.detail');
+
+    Route::get('create', [{{ModelName}}Controller::class, 'create'])->name('{{dir_name_dot}}{{model_name}}.create');
+
+    Route::post('store', [{{ModelName}}Controller::class, 'store'])->name('{{dir_name_dot}}{{model_name}}.store');
+
+    Route::get('edit/{id}', [{{ModelName}}Controller::class, 'edit'])->name('{{dir_name_dot}}{{model_name}}.edit');
+
+    Route::post('update/{id}', [{{ModelName}}Controller::class, 'update'])->name('{{dir_name_dot}}{{model_name}}.update');
+
+    Route::get('destroy/{id}', [{{ModelName}}Controller::class, 'destroy'])->name('{{dir_name_dot}}{{model_name}}.destroy');
+});

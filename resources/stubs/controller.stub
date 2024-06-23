@@ -1,0 +1,121 @@
+<?php
+
+namespace App\Http\Controllers{{BackSlashDirName}};
+
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use App\Models\{{ModelName}};
+use App\Http\Requests{{BackSlashDirName}}\{{ModelName}}\{{ModelName}}StoreRequest;
+use App\Http\Requests{{BackSlashDirName}}\{{ModelName}}\{{ModelName}}UpdateRequest;
+use App\Http\Requests{{BackSlashDirName}}\{{ModelName}}\{{ModelName}}DestroyRequest;
+
+class {{ModelName}}Controller extends Controller
+{
+    /**
+     * 一覧
+     * 
+     * @param Request $request HTTPリクエスト
+     * @return View ビュー
+     */
+    public function list(Request $request): View
+    {
+        ${{modelNames}} = {{ModelName}}::all();
+
+        return view('{{dir_name_dot}}{{model_name}}.list')->with([
+            '{{modelNames}}' => ${{modelNames}},
+        ]);
+    }
+
+    /**
+     * 詳細
+     * 
+     * @param Request $request HTTPリクエスト
+     * @param int     $id      ID
+     * @return View ビュー
+     */
+    public function detail(Request $request, int $id): View
+    {
+        ${{modelName}} = {{ModelName}}::find($id);
+
+        return view('{{dir_name_dot}}{{model_name}}.detail')->with([
+            '{{modelName}}' => ${{modelName}},
+        ]);
+    }
+
+    /**
+     * 新規作成
+     * 
+     * @param Request $request HTTPリクエスト
+     * @return View ビュー
+     */
+    public function create(Request $request): View
+    {
+        return view('{{dir_name_dot}}{{model_name}}.create');
+    }
+
+    /**
+     * 登録
+     * 
+     * @param {{ModelName}}StoreRequest $request リクエスト
+     * @return RedirectResponse リダイレクトレスポンス
+     */
+    public function store({{ModelName}}StoreRequest $request): RedirectResponse
+    {
+        {{ModelName}}::create($request->all());
+
+        return redirect()->route('{{dir_name_dot}}{{model_name}}.list')->with([
+            'message' => '登録しました。',
+        ]);
+    }
+
+    /**
+     * 編集
+     * 
+     * @param Request $request HTTPリクエスト
+     * @param int $id ID
+     * @return View ビュー
+     */
+    public function edit(Request $request, int $id): View
+    {
+        ${{modelName}} = {{ModelName}}::find($id);
+
+        return view('{{dir_name_dot}}{{model_name}}.edit')->with([
+            '{{modelName}}' => ${{modelName}},
+        ]);
+    }
+
+    /**
+     * 更新
+     * 
+     * @param {{ModelName}}UpdateRequest $request リクエスト
+     * @param int $id ID
+     * @return RedirectResponse リダイレクトレスポンス
+     */
+    public function update({{ModelName}}UpdateRequest $request, int $id): RedirectResponse
+    {
+        ${{modelName}} = {{ModelName}}::find($id);
+        ${{modelName}}->update($request->all());
+
+        return redirect()->route('{{dir_name_dot}}{{model_name}}.list')->with([
+            'message' => '更新しました。',
+        ]);
+    }
+
+    /**
+     * 削除
+     * 
+     * @param {{ModelName}}DestroyRequest $request リクエスト
+     * @param int $id ID
+     * @return RedirectResponse リダイレクトレスポンス
+     */
+    public function destroy({{ModelName}}DestroyRequest $request, int $id): RedirectResponse
+    {
+        ${{modelName}} = {{ModelName}}::find($id);
+        ${{modelName}}->delete();
+
+        return redirect()->route('{{dir_name_dot}}{{model_name}}.list')->with([
+            'message' => '削除しました。',
+        ]);
+    }
+}

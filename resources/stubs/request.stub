@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Requests{{BackSlashDirName}}\{{ModelName}};
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class {{ModelName}}{{ViewName}}Request extends FormRequest
+{
+    /**
+     * リクエストの実行権限をチェック
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * リクエストの検証ルールを定義
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            //
+        ];
+    }
+}

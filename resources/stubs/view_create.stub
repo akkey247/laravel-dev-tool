@@ -1,0 +1,10 @@
+<x-layout>
+  <x-slot:title>新規作成</x-slot>
+  <x-common.form-error />
+  <x-common.form action="{{ route('{{dir_name_dot}}{{model_name}}.store') }}">
+    <div class="flex flex-col gap-y-5">
+      <x-common.form.input type="text" name="name" value="{{ old('name') }}" label="Name" other="required autofocus" />
+      <x-common.button.primary type="submit" label="作成" />
+    </div>
+  </x-common.form>
+</x-layout>

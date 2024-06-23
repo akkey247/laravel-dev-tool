@@ -1,0 +1,10 @@
+<x-layout>
+  <x-slot:title>編集</x-slot>
+  <x-common.form-error />
+  <x-common.form action="{{ route('{{dir_name_dot}}{{model_name}}.update', ['id' => ${{modelName}}->id]) }}">
+    <div class="flex flex-col gap-y-5">
+      <x-common.form.input type="text" name="name" value="{{ old('name', ${{modelName}}->name) }}" label="Name" other="required autofocus" />
+      <x-common.button.primary type="submit" label="更新" />
+    </div>
+  </x-common.form>
+</x-layout>

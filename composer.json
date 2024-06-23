@@ -1,14 +1,25 @@
 {
-  "name": "akkey247/laravel-dev-tool",
-  "authors": [
-      {
-          "name": "akkey247"
-      }
-  ],
-  "autoload": {
-      "psr-4": {
-          "Akkey247\\LaravelDevTool\\": "src/"
-      }
-  },
-  "require": {}
+    "name": "akkey247/laravel-dev-tool",
+    "description": "",
+    "authors": [
+        {
+            "name": "akkey247"
+        }
+    ],
+    "require": {
+        "laravel/framework": "11.*"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Akkey247\\LaravelDevTool\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Akkey247\\LaravelDevTool\\LaravelDevToolServiceProvider"
+            ]
+        }
+    }
 }

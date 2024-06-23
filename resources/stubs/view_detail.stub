@@ -1,0 +1,22 @@
+<x-layout>
+  <x-slot:title>詳細</x-slot>
+  <x-common.table.table>
+    <x-common.table.tbody>
+      <x-common.table.tr>
+        <x-common.table.th>ID</x-common.table.th>
+        <x-common.table.td>{{ ${{modelName}}->id }}</x-common.table.td>
+      </x-common.table.tr>
+      <x-common.table.tr>
+        <x-common.table.th>Name</x-common.table.th>
+        <x-common.table.td>{{ ${{modelName}}->name }}</x-common.table.td>
+      </x-common.table.tr>
+      <x-common.table.tr>
+        <x-common.table.th>Control</x-common.table.th>
+        <x-common.table.td>
+          <x-common.button-link.primary size="small" href="{{ route('{{dir_name_dot}}{{model_name}}.edit', ['id' => ${{modelName}}->id]) }}" label="編集" />
+          <x-common.button-link.delete size="small" href="{{ route('{{dir_name_dot}}{{model_name}}.destroy', ['id' => ${{modelName}}->id]) }}" label="削除" />
+        </x-common.table.td>
+      </x-common.table.tr>
+    </x-common.table.tbody>
+  </x-common.table.table>
+</x-layout>
