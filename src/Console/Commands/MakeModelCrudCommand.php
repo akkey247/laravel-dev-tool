@@ -18,7 +18,14 @@ class MakeModelCrudCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'モデルのCRUD機能一式を作成';
+
+    /**
+     * スタブディレクトリのパス
+     *
+     * @var string
+     */
+    protected $stubDirPath = __DIR__ . '/../../../resources/stubs/make_model_crud_command/';
 
     /**
      * コマンド処理
@@ -123,7 +130,7 @@ class MakeModelCrudCommand extends Command
      */
     protected function createMigration(string $name): bool
     {
-        $stub = file_get_contents(__DIR__ . '/../../../resources/stubs/migration.stub');
+        $stub = file_get_contents($this->stubDirPath . 'migration.stub');
         $stub = $this->replaceStub($name, $stub);
 
         extract($this->getReplaceNames($name));
@@ -142,7 +149,7 @@ class MakeModelCrudCommand extends Command
      */
     protected function createModel(string $name): bool
     {
-        $stub = file_get_contents(__DIR__ . '/../../../resources/stubs/model.stub');
+        $stub = file_get_contents($this->stubDirPath . 'model.stub');
         $stub = $this->replaceStub($name, $stub);
 
         extract($this->getReplaceNames($name));
@@ -160,7 +167,7 @@ class MakeModelCrudCommand extends Command
      */
     protected function createController(string $name): bool
     {
-        $stub = file_get_contents(__DIR__ . '/../../../resources/stubs/controller.stub');
+        $stub = file_get_contents($this->stubDirPath . 'controller.stub');
         $stub = $this->replaceStub($name, $stub);
 
         extract($this->getReplaceNames($name));
@@ -178,7 +185,7 @@ class MakeModelCrudCommand extends Command
      */
     protected function createRoutes(string $name): bool
     {
-        $stub = file_get_contents(__DIR__ . '/../../../resources/stubs/routes.stub');
+        $stub = file_get_contents($this->stubDirPath . 'routes.stub');
         $stub = $this->replaceStub($name, $stub);
 
         extract($this->getReplaceNames($name));
@@ -197,7 +204,7 @@ class MakeModelCrudCommand extends Command
      */
     protected function createView(string $name, string $view_name): bool
     {
-        $stub = file_get_contents(__DIR__ . "/../../../resources/stubs/view_{$view_name}.stub");
+        $stub = file_get_contents($this->stubDirPath . "view_{$view_name}.stub");
         $stub = $this->replaceStub($name, $stub);
 
         extract($this->getReplaceNames($name));
@@ -216,7 +223,7 @@ class MakeModelCrudCommand extends Command
      */
     protected function createRequest(string $name, string $ViewName): bool
     {
-        $stub = file_get_contents(__DIR__ . "/../../../resources/stubs/request.stub");
+        $stub = file_get_contents($this->stubDirPath . 'request.stub');
         $stub = $this->replaceStub($name, $stub);
         $stub = str_replace('{{ViewName}}', $ViewName, $stub);
 
