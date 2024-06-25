@@ -4,6 +4,7 @@ namespace Akkey247\LaravelDevTool;
 
 use Illuminate\Support\ServiceProvider;
 use Akkey247\LaravelDevTool\Console\Commands\MakeModelCrudCommand;
+use Akkey247\LaravelDevTool\Console\Commands\RemoveModelCrudCommand;
 
 class LaravelDevToolServiceProvider extends ServiceProvider
 {
@@ -37,6 +38,7 @@ class LaravelDevToolServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 MakeModelCrudCommand::class,
+                RemoveModelCrudCommand::class,
             ]);
         }
     }

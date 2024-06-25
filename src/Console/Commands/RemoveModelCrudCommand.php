@@ -4,28 +4,21 @@ namespace Akkey247\LaravelDevTool\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class MakeModelCrudCommand extends Command
+class RemoveModelCrudCommand extends Command
 {
     /**
      * コマンド名と引数、オプションの定義
      *
      * @var string
      */
-    protected $signature = 'make:model-crud {name} {targets?*}';
+    protected $signature = 'remove:model-crud {name} {targets?*}';
 
     /**
      * コマンドの説明
      *
      * @var string
      */
-    protected $description = 'モデルのCRUD機能一式を作成';
-
-    /**
-     * スタブディレクトリのパス
-     *
-     * @var string
-     */
-    protected $stubDirPath = __DIR__ . '/../../../resources/stubs/make_model_crud_command/';
+    protected $description = 'モデルのCRUD機能一式を削除';
 
     /**
      * コマンド処理
@@ -47,79 +40,79 @@ class MakeModelCrudCommand extends Command
 
         // マイグレーション作成
         if (in_array('migration', $targets)) {
-            if (!$this->createMigration($name)) {
-                $this->error('Failed to create migration.');
+            if (!$this->removeMigration($name)) {
+                $this->error('Failed to remove migration.');
                 return;
             }
-            $this->info('Migration created successfully.');
+            $this->info('Migration removed successfully.');
         }
 
         // モデル作成
         if (in_array('model', $targets)) {
-            if (!$this->createModel($name)) {
-                $this->error('Failed to create model.');
+            if (!$this->removeModel($name)) {
+                $this->error('Failed to remove model.');
                 return;
             }
-            $this->info('Model created successfully.');
+            $this->info('Model removed successfully.');
         }
 
         // コントローラー作成
         if (in_array('controller', $targets)) {
-            if (!$this->createController($name)) {
-                $this->error('Failed to create controller.');
+            if (!$this->removeController($name)) {
+                $this->error('Failed to remove controller.');
                 return;
             }
-            $this->info('Controller created successfully.');
+            $this->info('Controller removed successfully.');
         }
 
         // ルート作成
         if (in_array('routes', $targets)) {
-            if (!$this->createRoutes($name)) {
-                $this->error('Failed to create routes.');
+            if (!$this->removeRoutes($name)) {
+                $this->error('Failed to remove routes.');
                 return;
             }
-            $this->info('Routes created successfully.');
+            $this->info('Routes removed successfully.');
         }
 
         // ビュー作成
         if (in_array('views', $targets)) {
-            if (!$this->createView($name, 'list')) {
-                $this->error('Failed to create \'list\' view.');
+            if (!$this->removeView($name, 'list')) {
+                $this->error('Failed to remove \'list\' view.');
                 return;
             }
-            if (!$this->createView($name, 'detail')) {
-                $this->error('Failed to create \'detail\' view.');
+            if (!$this->removeView($name, 'detail')) {
+                $this->error('Failed to remove \'detail\' view.');
                 return;
             }
-            if (!$this->createView($name, 'create')) {
-                $this->error('Failed to create \'create\' view.');
+            if (!$this->removeView($name, 'create')) {
+                $this->error('Failed to remove \'create\' view.');
                 return;
             }
-            if (!$this->createView($name, 'edit')) {
-                $this->error('Failed to create \'edit\' view.');
+            if (!$this->removeView($name, 'edit')) {
+                $this->error('Failed to remove \'edit\' view.');
                 return;
             }
-            $this->info('Views created successfully.');
+            $this->info('Views removed successfully.');
         }
 
         // リクエスト作成
         if (in_array('requests', $targets)) {
-            if (!$this->createRequest($name, 'Store')) {
-                $this->error('Failed to create \'store\' request.');
+            if (!$this->removeRequest($name, 'Store')) {
+                $this->error('Failed to remove \'store\' request.');
                 return;
             }
-            if (!$this->createRequest($name, 'Update')) {
-                $this->error('Failed to create \'update\' request.');
+            if (!$this->removeRequest($name, 'Update')) {
+                $this->error('Failed to remove \'update\' request.');
                 return;
             }
-            if (!$this->createRequest($name, 'Destroy')) {
-                $this->error('Failed to create \'destroy\' request.');
+            if (!$this->removeRequest($name, 'Destroy')) {
+                $this->error('Failed to remove \'destroy\' request.');
                 return;
             }
-            $this->info('Request created successfully.');
+            $this->info('Request removed successfully.');
         }
 
-        $this->info('All created successfully.');
+        $this->info('All removed successfully.');
     }
 
     /**
@@ -128,17 +121,13 @@ class MakeModelCrudCommand extends Command
      * @param string $name 名前
      * @return bool 作成成功したか
      */
-    protected function createMigration(string $name): bool
+    protected function removeMigration(string $name): bool
     {
-        $stub = file_get_contents($this->stubDirPath . 'migration.stub');
-        $stub = $this->replaceStub($name, $stub);
-
         extract($this->getReplaceNames($name));
 
-        $datetime = date('Y_m_d_His');
-        $path = database_path("migrations/{$datetime}_create_{$model_names}_table.php");
+        $path = database_path("migrations/*_create_{$model_names}_table.php");
 
-        return $this->createFile($path, $stub);
+        return $this->removeFile($path);
     }
 
     /**
@@ -147,16 +136,13 @@ class MakeModelCrudCommand extends Command
      * @param string $name 名前
      * @return bool 作成成功したか
      */
-    protected function createModel(string $name): bool
+    protected function removeModel(string $name): bool
     {
-        $stub = file_get_contents($this->stubDirPath . 'model.stub');
-        $stub = $this->replaceStub($name, $stub);
-
         extract($this->getReplaceNames($name));
 
         $path = app_path("Models/{$ModelName}.php");
 
-        return $this->createFile($path, $stub);
+        return $this->removeFile($path);
     }
 
     /**
@@ -165,16 +151,13 @@ class MakeModelCrudCommand extends Command
      * @param string $name 名前
      * @return bool 作成成功したか
      */
-    protected function createController(string $name): bool
+    protected function removeController(string $name): bool
     {
-        $stub = file_get_contents($this->stubDirPath . 'controller.stub');
-        $stub = $this->replaceStub($name, $stub);
-
         extract($this->getReplaceNames($name));
 
         $path = app_path("Http/Controllers/{$DirNameSlash}{$ModelName}Controller.php");
 
-        return $this->createFile($path, $stub);
+        return $this->removeFile($path);
     }
 
     /**
@@ -183,16 +166,13 @@ class MakeModelCrudCommand extends Command
      * @param string $name 名前
      * @return bool 作成成功したか
      */
-    protected function createRoutes(string $name): bool
+    protected function removeRoutes(string $name): bool
     {
-        $stub = file_get_contents($this->stubDirPath . 'routes.stub');
-        $stub = $this->replaceStub($name, $stub);
-
         extract($this->getReplaceNames($name));
 
         $path = base_path("routes/{$model_name}.php");
 
-        return $this->createFile($path, $stub);
+        return $this->removeFile($path);
     }
 
     /**
@@ -202,16 +182,13 @@ class MakeModelCrudCommand extends Command
      * @param string $view_name ビュー名
      * @return bool 作成成功したか
      */
-    protected function createView(string $name, string $view_name): bool
+    protected function removeView(string $name, string $view_name): bool
     {
-        $stub = file_get_contents($this->stubDirPath . "view_{$view_name}.stub");
-        $stub = $this->replaceStub($name, $stub);
-
         extract($this->getReplaceNames($name));
 
         $path = resource_path("views/{$dir_name_slash}{$model_name}/{$view_name}.blade.php");
 
-        return $this->createFile($path, $stub);
+        return $this->removeFile($path);
     }
 
     /**
@@ -221,17 +198,13 @@ class MakeModelCrudCommand extends Command
      * @param string $ViewName ビュー名
      * @return bool 作成成功したか
      */
-    protected function createRequest(string $name, string $ViewName): bool
+    protected function removeRequest(string $name, string $ViewName): bool
     {
-        $stub = file_get_contents($this->stubDirPath . 'request.stub');
-        $stub = $this->replaceStub($name, $stub);
-        $stub = str_replace('{{ViewName}}', $ViewName, $stub);
-
         extract($this->getReplaceNames($name));
 
         $path = app_path("Http/Requests/{$ModelName}/{$ModelName}{$ViewName}Request.php");
 
-        return $this->createFile($path, $stub);
+        return $this->removeFile($path);
     }
 
     /**
@@ -271,48 +244,23 @@ class MakeModelCrudCommand extends Command
         );
     }
 
-    /**
-     * スタブの置換
-     * 
-     * @param string $name 名前
-     * @param string $stub 置換するスタブ
-     * @return string 置換後のスタブ
-     */
-    function replaceStub(string $name, string $stub): string
+    function removeFile(string $path): bool
     {
-        extract($this->getReplaceNames($name));
+        $paths = (strpos($path, '*') !== false) ? glob($path) : [$path];
 
-        $stub = str_replace('{{BackSlashDirName}}', $BackSlashDirName, $stub);
-        $stub = str_replace('{{dir_name_slash}}', $dir_name_slash, $stub);
-        $stub = str_replace('{{dir_name_dot}}', $dir_name_dot, $stub);
-        $stub = str_replace('{{ModelName}}', $ModelName, $stub);
-        $stub = str_replace('{{modelName}}', $modelName, $stub);
-        $stub = str_replace('{{modelNames}}', $modelNames, $stub);
-        $stub = str_replace('{{model_name}}', $model_name, $stub);
-        $stub = str_replace('{{model_names}}', $model_names, $stub);
+        foreach ($paths as $path) {
+            if (!file_exists($path)) {
+                $this->warn('File already removed. Skip removing. [' . $path . ']');
+                return true;
+            }
 
-        return $stub;
-    }
+            if (!unlink($path)) {
+                $this->error('Failed to remove file.');
+                return false;
+            }
 
-    /**
-     * ファイル作成
-     * 
-     * @param string $path ファイルパス
-     * @return bool 作成成功したか
-     */
-    function createFile(string $path, string $stub): bool
-    {
-        if (file_exists($path)) {
-            $this->error('File already exists!');
-            return false;
+            $this->line('File removed. [' . $path . ']');
         }
-
-        $dirpath = dirname($path);
-        if (!is_dir($dirpath)) {
-            mkdir($dirpath, 0755, true);
-        }
-        file_put_contents($path, $stub);
-
         return true;
     }
 
