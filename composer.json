@@ -7,7 +7,7 @@
         }
     ],
     "require": {
-        "laravel/framework": "11.*"
+        "laravel/framework": "12.*"
     },
     "license": "MIT",
     "autoload": {
