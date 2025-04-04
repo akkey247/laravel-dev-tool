@@ -21,6 +21,37 @@ class RemoveModelCrudCommand extends Command
     protected $description = 'モデルのCRUD機能一式を削除';
 
     /**
+     * コマンドのヘルプ情報を取得
+     *
+     * @return string
+     */
+    public function getHelp(): string
+    {
+        return <<<HELP
+モデルのCRUD機能一式を削除するコマンドです。
+
+使用方法:
+  php artisan remove:model-crud {name} {targets?*}
+
+引数:
+  name                削除するモデルの名前（例: User, Admin/User）
+  targets             削除対象（オプション、複数指定可）
+                      指定可能な値: migration, model, controller, routes, views, requests
+                      指定がない場合は全ての対象を削除
+
+使用例:
+  - すべてのコンポーネントを削除:
+    php artisan remove:model-crud User
+
+  - 特定のコンポーネントのみ削除:
+    php artisan remove:model-crud Admin/User migration model
+
+  - ビューとコントローラーのみ削除:
+    php artisan remove:model-crud User controller views
+HELP;
+    }
+
+    /**
      * コマンド処理
      *
      * @return void

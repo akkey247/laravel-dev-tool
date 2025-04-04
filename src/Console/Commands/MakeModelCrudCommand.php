@@ -21,6 +21,45 @@ class MakeModelCrudCommand extends Command
     protected $description = 'モデルのCRUD機能一式を作成';
 
     /**
+     * コマンドのヘルプメッセージを取得
+     *
+     * @return string
+     */
+    public function getHelp(): string
+    {
+        return <<<HELP
+モデルのCRUD機能一式を作成するコマンドです。
+
+使用方法:
+  php artisan make:model-crud {name} {targets?*}
+
+引数:
+  name                作成するモデルの名前（例: User, Admin/User）
+  targets             作成するコンポーネント（オプション、複数指定可）
+                      指定可能な値: migration, model, controller, routes, views, requests
+                      指定がない場合は全ての対象を作成
+
+使用例:
+  - すべてのコンポーネントを作成:
+    php artisan make:model-crud User
+
+  - 特定のコンポーネントのみ作成:
+    php artisan make:model-crud User migration model controller
+
+  - ネストされたモデルの場合:
+    php artisan make:model-crud Admin/User
+
+作成されるコンポーネント:
+  - migration: マイグレーションファイル
+  - model: モデルクラス
+  - controller: コントローラークラス
+  - routes: ルート定義
+  - views: ビューファイル（list, detail, create, edit）
+  - requests: リクエストクラス（Store, Update, Destroy）
+HELP;
+    }
+
+    /**
      * スタブディレクトリのパス
      *
      * @var string
